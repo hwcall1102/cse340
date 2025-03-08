@@ -170,8 +170,7 @@ footer {
   #hero-card {
     width: 200px;
     height: 70%;
-  
-
+  }
   #reviews {
     grid-column: 2/3;
     grid-row: 2/3;
@@ -184,6 +183,4 @@ footer {
     grid-column: 1/2;
     grid-row: 2/3;
   }
-  
 }
-
