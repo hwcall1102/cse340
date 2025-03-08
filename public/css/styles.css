@@ -93,7 +93,7 @@ nav li {
 }
 #hero div a {
   background: var(--primary-color);
-  color:var(--paragraph-color-on-color);
+  color: white;
   text-decoration: none;
   border-radius: .25em;
   padding: 5px;
