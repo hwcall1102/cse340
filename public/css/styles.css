@@ -149,12 +149,11 @@ footer {
     background-image: url(../images/site/small_check.jpg);
   }
   #wrapper {
-    width: 70%;
     background: white;
     margin-top: 20px;
     border: solid 7px var(--primary-color);
     border-radius: 1em;
-    
+    Margin: 0 auto;
     padding: 5px;
   }
   main {
