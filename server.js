@@ -12,7 +12,9 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const detailRoute = require("./routes/detailRoute")
 const utilities = require("./utilities/index")
+const errorRoute = require("./routes/errorRoute")
 
 /* ***********************
  * View Engine and Templates
@@ -28,7 +30,11 @@ app.use(static)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
-app.use("/inv", inventoryRoute)
+app.use("/inv", utilities.handleErrors(inventoryRoute))
+// Detail routes
+app.use("/det", utilities.handleErrors(detailRoute))
+// 500 error 
+app.use("/trigger-error", errorRoute)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
@@ -48,6 +54,21 @@ app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
 
+
+/* 500 error trigger middleware */
+
+module.exports = (err, req, res, next) => {
+  if (err.status === 500) {
+    // Log the error (you can log to a file or a service in real applications)
+    console.error('Internal Server Error:', err.message);
+
+    // Redirect to error view with the error message
+    res.status(500).render('error', { error: err.message });
+  } else {
+    // Pass the error to the default Express error handler if it's not a 500 error
+    next(err);
+  }
+};
 
 /* ***********************
 * Express Error Handler
