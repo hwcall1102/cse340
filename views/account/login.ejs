@@ -1,0 +1,19 @@
+<h1><%- title %></h1>
+<div class="flash-message"><%- messages() %></div>
+<form class="input-box" id="loginForm" action="/account/login" method="POST">
+    <fieldset id="accountFieldset">
+        <legend>Login</legend>
+        <div class="input-group" id="emailGroup">
+            <label for="email">Email:</label>
+            <input type="email" name="account_email" id="email" required>
+        </div>
+        <div class="input-group" id="passwordGroup">
+            <label for="password">Password:</label>
+            <input type="password" name="account_password" id="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </fieldset>
+    <div id="signup">
+        <p>Don't have an account? <a href="/account/register">Sign up</a></p>
+    </div>
+</form>
