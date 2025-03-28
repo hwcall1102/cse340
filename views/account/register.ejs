@@ -1,24 +1,33 @@
 <h1><%- title %></h1>
+<div class="flash-message"><%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+       <% errors.array().forEach(error => { %>
+         <li><%= error.msg %></li>
+      <%  }) %>
+       </ul>
+      <% } %>
+</div>
 
 <form class="input-box" id="registerForm" action="/account/register" method="POST">
     <fieldset id="accountFieldset">
         <legend>Register</legend>
         <div class="input-group" id="fNameGroup">
             <label for="firstName">First Name:</label>
-            <input type="text" name="account_firstname" id="fName" required>
+            <input type="text" name="account_firstname" id="fName" required value="<%= locals.account_firstname %>">
         </div>
         <div class="input-group" id="lNameGroup">
             <label for="lastName">Last Name:</label>
-            <input type="text" name="account_lastname" id="lName" required>
+            <input type="text" name="account_lastname" id="lName" required value="<%= locals.account_lastname %>">
         </div>
         <div class="input-group" id="emailGroup">
             <label for="email">Email:</label>
-            <input type="email" name="account_email" id="email" required placeholder="Enter a valid email address">
+            <input type="email" name="account_email" id="email" required placeholder="Enter a valid email address" value="<%= locals.account_email %>">
         </div>
         <div class="input-group" id="passwordGroup">
             <label for="password">Password:</label>
             <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
-            <small id="passwordNote">*Minimum 12 characters, contain at least one uppercase letter, one number, and one special character.</small>
+            <small id="passwordNote">*Minimum 12 characters, contain at least one uppercase letter, one lowercase, one number, and one special character.</small>
         </div>
         <button type="submit">Register</button>
     </fieldset>

@@ -55,6 +55,31 @@ validate.registrationRules = () => {
     ]
 }
 
+validate.loginRules = () => {
+    return [
+      // email is required and must be valid
+      body("account_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required.")
+      .custom(async (account_email) => {
+        const emailExists = await accountModel.checkExistingEmail(account_email)
+        if (emailExists == false) {
+          throw new Error("Email not found. Please register or use different email")        
+        }
+        }),
+  
+      // password is required
+      body("account_password")
+        .trim()
+        .notEmpty()
+        .withMessage("Password is required."),
+    ]
+}
+
 /* ******************************
  * Check data and return errors or continue to registration
  * ***************************** */
