@@ -13,11 +13,11 @@
         </div>
         <div class="input-group" id="emailGroup">
             <label for="email">Email:</label>
-            <input type="email" name="account_email" id="email" required>
+            <input type="email" name="account_email" id="email" required placeholder="Enter a valid email address">
         </div>
         <div class="input-group" id="passwordGroup">
             <label for="password">Password:</label>
-            <input type="password" name="account_password" id="password" pattern="(?=.*[A-Z])(?=.*\d)(?.=.*[!@#$%^&*()_+={}\[\]:;,.>?/-]).{12,}$" required>
+            <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
             <small id="passwordNote">*Minimum 12 characters, contain at least one uppercase letter, one number, and one special character.</small>
         </div>
         <button type="submit">Register</button>
