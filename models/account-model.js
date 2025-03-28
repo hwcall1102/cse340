@@ -19,5 +19,21 @@ async function checkExistingEmail(account_email){
     } catch (error) {
       return error.message
     }
-  }
-module.exports = { registerAccount, checkExistingEmail };
+}
+
+/* ****************************************
+ *  check password match
+ * *************************************** */
+async function passwordMatch(account_email, account_password){
+    try {
+        const sql = "SELECT account_password FROM account WHERE account_email = $1"
+        const password = await pool.query(sql, [account_email])
+        return password.rowCount && await bcrypt.compare(account_password, password.rows[0].account_password)
+    } catch (error) {
+        return error.message
+    }
+    
+}
+
+
+module.exports = { registerAccount, checkExistingEmail, passwordMatch };
