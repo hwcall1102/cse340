@@ -218,6 +218,18 @@ footer {
   grid-template-columns: 1fr;
 }
 
+/* inventory management */
+.addInvLinks {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 10px;
+  padding: 10px;
+}
+.addLinks {
+  padding: 10px;
+  font-size: large;
+}
+
 /* login page */ 
 .notice {
   color: red;
@@ -319,6 +331,12 @@ input:focus:invalid {
     grid-column: 1/2;
     grid-row: 2/3;
   }
+  /* large management display */
+  .addInvLinks {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
   /*large inv display*/
 
   #inv-display {

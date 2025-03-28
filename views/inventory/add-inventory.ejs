@@ -1,0 +1,62 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+    
+    <div class="flash-message"><%- messages() %>
+        <% if (errors) { %>
+            <ul class="notice">
+           <% errors.array().forEach(error => { %>
+             <li><%= error.msg %></li>
+          <%  }) %>
+           </ul>
+          <% } %>
+    </div>
+
+    <form class="input-box" id="newClassForm" action="/inv/add-classification" method="POST">
+        <fieldset id="accountFieldset">
+            <legend></legend>
+            <div class="input-group" id="addClassGroup">
+                <label for="classification">Classification</label>
+                <select name="classification_name" id="className" required placeholder="Enter new classification name"  pattern="^[a-zA-Z0-9]+$" ></select>
+            </div>
+            <div class="input-group" id="addMakeGroup">
+                <label for="make">Make</label>
+                <input type="text" name="inv_make" id="make" required placeholder="Min of 3 characters"  pattern="^[a-zA-Z0-9]+.{3,}$" >
+            </div>
+            <div class="input-group" id="addModelGroup">
+                <label for="model">Model</label>
+                <input type="text" name="inv_model" id="model" required placeholder="Min of 3 characters"  pattern="^[a-zA-Z0-9]+.{3,}$" >
+            </div>
+            <div class="input-group" id="addDescriptionGroup">
+                <label for="description">Description</label>
+                <input type="text" name="inv_description" id="description" required>
+            </div>
+            <div class="input-group" id="addImageGroup">
+                <label for="image">Image Path</label>
+                <input type="text" name="inv_image" id="image" required value="/images/vehicles/no-image.png">
+            </div>
+            <div class="input-group" id="addThumbnailGroup">
+                <label for="thumbnail">Thumbnail Path</label>
+                <input type="text" name="inv_thumbnail" id="thumbnail" required value="/images/vehicles/no-image.png">
+            </div>
+            <div class="input-group" id="addPriceGroup">
+                <label for="price">Price</label>
+                <input type="number" name="inv_price" id="price" required min="0" max="1000000" placeholder="$0.00">
+            </div>
+            <div class="input-group" id="addYearGroup">
+                <label for="year">Year</label>
+                <input type="number" name="inv_year" id="year" required min="1900" max="2025" placeholder="4 digit year">
+            </div>
+            <div class="input-group" id="addMileageGroup">
+                <label for="mileage">Miles</label>
+                <input type="number" name="inv_miles" id="mileage" required min="0" max="1000000" placeholder="digits only">
+            </div>
+            <div class="input-group" id="addColorGroup">
+                <label for="color">Color</label>
+                <input type="text" name="inv_color" id="color" required>
+            </div>
+            <button type="Add Inventory">Add Inventory</button>
+        </fieldset>
+    </form>
