@@ -238,10 +238,18 @@ footer {
 
 input:focus:invalid {
   background-color: rgba(255, 140, 140);
- }
- input:required:valid {
+}
+input:required:valid {
   background-color: rgb(140, 255, 140);
- }
+}
+
+select:focus:invalid {
+  background-color: rgba(255, 140, 140);
+}
+select:required:valid {
+  background-color: rgba(140, 255, 140);
+}
+
 .input-box {
   width: 480px;
   display: grid;
@@ -287,6 +295,9 @@ input:focus:invalid {
 #signup {
   color: var(--headline-color-on-color);
   text-align: center;
+}
+#addDescriptionGroup {
+  height: 100px;
 }
 
 @media screen and (min-width: 800px) {
