@@ -71,18 +71,6 @@ validate.loginRules = () => {
             throw new Error("Email not found. Please register or use different email")        
             }
         }),
-  
-      // password is required
-      body("account_password")
-        .trim()
-        .notEmpty()
-        .withMessage("Password is required.")
-        .custom(async (account_email, account_password) => {
-            const passwordMatch = await accountModel.passwordMatch(account_email, account_password)
-            if (!passwordMatch) {
-              throw new Error("Password does not match.")
-            }
-            }),
     ]
 }
 
