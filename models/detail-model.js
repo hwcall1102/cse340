@@ -17,6 +17,7 @@ async function getInventoryById(inv_id) {
       WHERE inv_id = $1`,
       [inv_id]
     )
+    console.log(data.rows)
     return data.rows
   } catch (error) {
     console.error("getInventoryByid error " + error)
