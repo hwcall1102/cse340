@@ -224,10 +224,24 @@ footer {
   grid-template-columns: 1fr;
   margin: 10px;
   padding: 10px;
+  list-style: none;
 }
 .addLinks {
   padding: 10px;
   font-size: large;
+}
+#manageInventory {
+  grid-row: 3;
+}
+#manageMessage {
+  grid-row: 4
+}
+#selectClass {
+  grid-row: 5;
+}
+#inventoryDisplay {
+  padding: 10px;
+  width: 90%;
 }
 
 /* login page */ 
@@ -384,6 +398,19 @@ select:required:valid {
     grid-row: 2;
     grid-column: 1/3;
     margin: 0 auto;
+  }
+
+  #manageInventory {
+    grid-row: 3;
+  }
+  #manageMessage {
+    grid-row: 4
+  }
+  #selectClass {
+    grid-row: 5;
+  }
+  #inventoryDisplay {
+    grid-row: 3/6;
   }
 
 }
