@@ -1,0 +1,41 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>
+    
+    <div class="flash-message"><%- messages() %>
+        <% if (errors) { %>
+            <ul class="notice">
+           <% errors.array().forEach(error => { %>
+             <li><%= error.msg %></li>
+          <%  }) %>
+           </ul>
+          <% } %>
+    </div>
+    <p>Confirm Deletion - The delete is permanent.</p>
+    <form class="input-box" id="deleteForm" action="/inv/delete" method="POST">
+        <fieldset id="accountFieldset">
+            <legend></legend>
+            <div class="input-group" id="addMakeGroup">
+                <label for="make">Make:</label>
+                <input type="text" name="inv_make" id="make" required readonly value="<%= locals.inv_make %>">
+            </div>
+            <div class="input-group" id="addModelGroup">
+                <label for="model">Model:</label>
+                <input type="text" name="inv_model" id="model" required readonly value="<%= locals.inv_model %>">
+            </div>
+            <div class="input-group" id="addPriceGroup">
+                <label for="price">Price:</label>
+                <input type="number" name="inv_price" id="price" required readonly value="<%= locals.inv_price %>">
+            </div>
+            <div class="input-group" id="addYearGroup">
+                <label for="year">Year:</label>
+                <input type="number" name="inv_year" id="year" required readonly value="<%= locals.inv_year %>">
+            </div>
+            <button type="Delete Inventory" >Delete</button>
+            <input type="hidden" name="inv_id"
+            <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+            <% } %>>
+        </fieldset>
+    </form>
