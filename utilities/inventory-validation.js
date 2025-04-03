@@ -130,6 +130,52 @@ validate.checkInventoryData = async (req, res, next) => {
     next();
 };
 
+/* ******************************
+ * Check data and return errors or continue to registration
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  let errors = [];
+  errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    } = req.body;
+    let classifications = await utilities.buildClassificationList(
+      classification_id
+    );
+    let nav = await utilities.getNav();
+    res.render("inventory/edit-inventory", { // Try again
+      errors,
+      title: "Edit Inventory",
+      nav,
+      classifications,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+    return;
+  }
+  next();
+};
+
 /* **********************************
  *  Add classification Data Validation Rules
  * ********************************* */
