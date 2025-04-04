@@ -1,0 +1,44 @@
+<h1><%- title %></h1>
+<%- messages() %>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+<form class="input-box" id="updateForm"action="/account/update" method="post">
+    <fieldset id="accountFieldset">
+        <legend>Update Account Information</legend>
+        <div class="input-group" id="fNameGroup">
+            <label>First name</label>
+            <input type="text" name="account_firstname" required autocomplete="given-name" value="<%= locals.account_firstname %>">
+        </div>
+        <div class="input-group" id="lNameGroup">
+            <label>Last name</label>
+            <input type="text" name="account_lastname" required autocomplete="family-name" value="<%= locals.account_lastname %>">
+        </div>
+        <div class="input-group" id="emailGroup">
+            <label>Email address</label>
+            <input type="email" name="account_email" required autocomplete="email username" value="<%= locals.account_email %>">
+        </div>
+        
+        <button type="submit">Update</button>
+        <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+        <input type="hidden" name="old_email" value="<%= locals.account_email %>"> <%# To exclude from existing email search %>
+    </fieldset>
+</form>
+
+<form class="input-box" id="updatePassword" action="/account/update-password" method="post">
+    <fieldset id="accountFieldset">
+        <legend>Change Password</legend>
+        <div class="input-group" id="currentPasswordGroup">
+            <label>Password</label>
+            <input type="password" name="account_password" id="password" required autocomplete="new-password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$">  
+        </div>  
+        <small id="passwordNote">*Minimum 12 characters, contain at least one uppercase letter, one lowercase, one number, and one special character.</small>
+        <button type="submit">Change Password</button>
+        <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+    </fieldset>
+</form>
