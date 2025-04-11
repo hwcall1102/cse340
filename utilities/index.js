@@ -92,6 +92,7 @@ Util.buildIndividualGrid = async function(data){
       grid += '<h2>Miles: '
       grid += '<span>' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</span>'
       grid += '</h2>'
+      grid += '<a href="/account/message/' + vehicle.inv_id + '" title="message"><button>Get More Info!</button></a>'
       grid += '</div>'
       grid += '</li>'
     })

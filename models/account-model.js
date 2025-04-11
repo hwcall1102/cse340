@@ -8,12 +8,23 @@ async function registerAccount(account_firstname, account_lastname, account_emai
         return error.message
     }
 }
+
+async function sendMessage(message_email, message_message, inv_id){
+    try {
+        const sql = "INSERT INTO messages (message_email, message_message, inv_id) VALUES ($1, $2, $3) RETURNING *";
+        console.log("executing query:", sql);
+        console.log("with parameters:", {message_email, message_message, inv_id});
+        return await pool.query(sql, [message_email, message_message, inv_id]);
+    } catch (error) {
+        return error.message
+    }
+}
 /* **********************
  *   Check for existing email
  * ********************* */
 async function checkExistingEmail(account_email, exludedEmail = null){
     try {
-        if (exludedEmal) {
+        if (exludedEmail) {
             const sql = "SELECT * FROM account WHERE account_email = $1 AND account_email != $2"
             const email = await pool.query(sql, [account_email, exludedEmail])
             return email.rowCount
@@ -75,4 +86,14 @@ async function updatePassword(account_id, hashed_password) {
         return new Error("Password update failed.")
     }
 }
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword };
+
+async function getAllMessages() {
+    try {
+        const sql = "SELECT * FROM messages JOIN inventory ON messages.inv_id = inventory.inv_id";
+        const result = await pool.query(sql);
+        return result.rows;
+    } catch (error) {
+        return new Error("No messages found.")
+    }
+}
+module.exports = { getAllMessages, registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, sendMessage };

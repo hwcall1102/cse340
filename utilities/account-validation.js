@@ -99,7 +99,7 @@ validate.updateRules = () => {
       .custom(async (account_email, { req }) => {
         console.log("REQ!!!!")
         console.dir(req.body)
-        const emailExits = await accountModel.checkExistingEmail(account_email, req.body.old_email)
+        const emailExists = await accountModel.checkExistingEmail(account_email, req.body.old_email)
         if (emailExists) {
           throw new Error("Email exists. Please uee a different email.")
         }
@@ -120,6 +120,23 @@ validate.updatePasswordRules = () => {
       minSymbols: 1,
     })
     .withMessage("Password does not meet requirements.")
+  ]
+}
+
+/*  **********************************
+  *  Registration Data Validation Rules
+  * ********************************* */
+validate.messageRules = () => {
+  return [
+    
+    // valid email is required and cannot already exist in the DB
+    body("message_email")
+      .trim()
+      .escape()
+      .notEmpty()
+      .isEmail()
+      .normalizeEmail() // refer to validator.js docs
+      .withMessage("A valid email is required.")
   ]
 }
 
@@ -193,6 +210,21 @@ validate.checkUpdatePasswordData = async (req, res, next) => {
       res.render("account/update", {
           errors,
           title: "Update",
+          nav,
+      });
+      return;
+  }
+  next();
+};
+
+validate.checkMessageData = async (req, res, next) => {
+  let errors = [];
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+      let nav = await utilities.getNav();
+      res.render("account/message", {
+          errors,
+          title: "Message",
           nav,
       });
       return;

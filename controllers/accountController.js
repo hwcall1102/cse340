@@ -1,4 +1,5 @@
 const accountModel = require('../models/account-model')
+const detModel = require('../models/detail-model')
 const utilities = require('../utilities');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken")
@@ -27,6 +28,40 @@ async function buildRegister(req, res, next) {
     errors: null,
   })
 }
+
+/* **************************
+*  deliver message view
+* ************************* */
+async function buildMessage(req, res, next) {
+  const inv_id = req.params.inventoryId
+  const data = await detModel.getInventoryById(inv_id)
+  const inventoryName = data[0].inv_year + " " + data[0].inv_make + " " + data[0].inv_model
+  let nav = await utilities.getNav()
+  res.render("account/message", {
+    title: "Message -" + inventoryName,
+    nav,
+    errors: null,
+    inv_id,
+  })
+}
+
+/* *****************************************
+* build view message view
+* *************************************** */
+async function buildViewMessages(req, res, next) {
+  let nav = await utilities.getNav()
+  const showMessages = await accountModel.getAllMessages()
+  if (!showMessages) {
+    req.flash("notice", "No messages to display.")
+  }
+  res.render("account/view-messages", {
+    title: "Messages",
+    nav,
+    errors: null,
+    showMessages
+  })
+}
+
 
 /* ****************************************
 process registration
@@ -91,7 +126,7 @@ async function accountLogin(req, res) {
       
       utilities.updateCookie(accountData, res)
 
-      return res.redirect("/account/")
+      return res.redirect("/account")
     } else {
       req.flash("message notice", "Please check your credentials and try again.")
       res.status(400).render("account/login", {
@@ -232,5 +267,38 @@ async function updatePassword(req, res) {
   }
 
 }
+
+/* *************************
+* process send message
+* ************************ */
+async function sendMessage(req, res) {
+  let nav = await utilities.getNav()
   
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, accountLogout, buildUpdate, updateAccount, updatePassword };
+  const  { 
+    message_email, 
+    message_message, 
+    inv_id
+  } = req.body
+  const regResult = await accountModel.sendMessage(
+    message_email,
+    message_message,
+    inv_id
+  )
+  if (regResult) {
+    req.flash("notice",`Congratulations, your message has been sent. A representitive will reply via email soon.`)
+    res.status(201).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the message failed to send. Please try again.")
+    res.status(501).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+    })
+  }
+}
+  
+module.exports = {  buildLogin, buildRegister, buildMessage, buildViewMessages, registerAccount, accountLogin, buildAccountManagement, accountLogout, buildUpdate, updateAccount, updatePassword, sendMessage };

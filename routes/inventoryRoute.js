@@ -7,8 +7,8 @@ const invValidate = require('../utilities/inventory-validation');
 const invCont = require('../controllers/invController');
 
 // route middleware
-router.use(["/","/add-classification", "/add-inventory", "/edit/:inv_id", "/delete/:inv_id", "/update", "/delete/",], utilities.checkLogin)
-router.use(["/","/add-classification", "/add-inventory", "/edit/:inv_id", "/update", "/delete/:inv_id", "/delete/"], utilities.checkAuthorizationManager)
+router.use(["/add-classification", "/add-inventory", "/edit/:inv_id", "/delete/:inv_id", "/update", "/delete/",], utilities.checkLogin)
+router.use(["/add-classification", "/add-inventory", "/edit/:inv_id", "/update", "/delete/:inv_id", "/delete/"], utilities.checkAuthorizationManager)
 
 // route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));

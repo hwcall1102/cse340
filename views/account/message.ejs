@@ -1,0 +1,26 @@
+<h1><%- title %></h1>
+<div class="flash-message"><%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+       <% errors.array().forEach(error => { %>
+         <li><%= error.msg %></li>
+      <%  }) %>
+       </ul>
+      <% } %>
+</div>
+
+<form class="input-box" id="messageForm" action="/account/message" method="POST">
+    <fieldset id="accountFieldset">
+        <legend>Get More Info</legend>
+        <div class="input-group" id="emailGroup">
+            <label for="email">Email:</label>
+            <input type="email" name="message_email" id="email" required placeholder="Enter a valid email address" value="<%= locals.account_email %>">
+        </div>
+        <div class="input-group" id="messageGroup">
+            <label for="message">Message: </label>
+            <textarea type="text" name="message_message" id="message" required></textarea>
+        </div>
+        <input type="hidden" name="inv_id" value="<%= locals.inv_id %>">
+        <button type="submit">Send Message</button>
+    </fieldset>
+</form>
